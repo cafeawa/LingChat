@@ -1,0 +1,29 @@
+name: Verify iOS Build
+on: [push, workflow_dispatch]
+
+jobs:
+  verify:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-ios
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      # 验证 Tauri iOS 环境配置
+      - name: Tauri iOS Init Check
+        run: npm run tauri ios init
+
+      # 尝试进行构建，这会生成 Xcode 项目并编译 Rust 代码
+      - name: Build iOS Project
+        run: npm run tauri ios build
