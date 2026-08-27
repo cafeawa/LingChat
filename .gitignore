@@ -180,3 +180,6 @@ AGENTS.md
 # 本地 APK build 路径
 prev-build-*/
 
+
+# pnpm 本地 store（若配置在工作区内）
+.pnpm-store/
